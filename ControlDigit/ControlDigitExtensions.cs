@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
 
 namespace ControlDigit
 {
+
 	public static class ControlDigitExtensions
 	{
+
 		public static int ControlDigit(this long number)
 		{
 			int sum = 0;
@@ -28,8 +31,43 @@ namespace ControlDigit
 
 		public static int ControlDigit2(this long number)
 		{
-			throw new NotImplementedException();
+		    var sum = 0;
+		    var factor = 1;
+
+		    foreach (var digit in GetDigitsFromLast(number))
+		    {
+		        sum += digit * factor;
+		        factor = UpdateFactor(factor);
+		    }
+
+		    return GetResult(sum);
 		}
+
+	    private static int GetResult(int sum)
+	    {
+	        var defaultValue = 1;
+
+	        var result = sum % 11;
+
+	        return result == 10 
+                ? defaultValue 
+                : result;
+	    }
+
+	    public static int UpdateFactor(int prevFactor)
+	    {
+	        return 4 - prevFactor;
+	    }
+        
+        public static IEnumerable<int> GetDigitsFromLast(long number)
+	    {
+	        while (number > 0)
+	        {
+	            yield return (int)number % 10;
+	            number /= 10;
+            }
+	    }
+       
 	}
 
 	[TestFixture]

@@ -6,9 +6,34 @@ namespace Markdown
 	{
 		public string RenderToHtml(string markdown)
 		{
-			return markdown; //TODO
+            var processor = new MarkdownProcessor();
+            for (int i = 0; i < markdown.Length; i++)
+            {
+                processor.Process(markdown[i]);
+            }
+            return processor.GetHtml();
 		}
 	}
+
+    public class MarkdownProcessor
+    {
+        public void Process(char c)
+        {
+
+        }
+
+        public string GetHtml()
+        {
+            return "";
+        }
+
+        public void RegisterHandler()
+        {
+
+        }
+    }
+
+
 
 	[TestFixture]
 	public class Md_ShouldRender
