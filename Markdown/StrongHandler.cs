@@ -7,7 +7,7 @@
             throw new System.NotImplementedException();
         }
 
-        public void Exclude(IHandler handler)
+        public void ExcludeProcessIn(IHandler handler)
         {
             throw new System.NotImplementedException();
         }

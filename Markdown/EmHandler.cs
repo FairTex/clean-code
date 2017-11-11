@@ -2,7 +2,7 @@
 {
     public class EmHandler : IHandler
     {
-        private State State { get; set; } = State.Out;
+        public State State { get; private set; } = State.Out;
         private char StartSymbol { get; set; } = '_';
         private char StopSymbol { get; set; } = '_';
 
@@ -11,7 +11,7 @@
             
         }
 
-        public void Exclude(IHandler handler)
+        public void ExcludeProcessIn(IHandler handler)
         {
             
         }

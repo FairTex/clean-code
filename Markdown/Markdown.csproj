@@ -47,8 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmHandler.cs" />
+    <Compile Include="IHandler.cs" />
+    <Compile Include="MarkdownProcessor.cs" />
     <Compile Include="Md.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="StrongHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
