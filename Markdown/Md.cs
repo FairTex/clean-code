@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 
 namespace Markdown
 {
@@ -7,19 +8,7 @@ namespace Markdown
         public string RenderToHtml(string markdown)
         {
             var processor = new MarkdownProcessor();
-
-            var emHandler = new EmHandler();
-            var strongHandler = new StrongHandler();
-            strongHandler.ExcludeProcessIn(emHandler);
-
-            processor.RegisterHandler(emHandler);
-            processor.RegisterHandler(strongHandler);
-
-            for (int i = 0; i < markdown.Length; i++)
-            {
-                processor.Process(markdown[i]);
-            }
-            return processor.GetHtml();
+            return processor.Process(markdown);
         }
     }
 
@@ -27,5 +16,12 @@ namespace Markdown
     [TestFixture]
     public class Md_ShouldRender
     {
+        [Test]
+        public void RenderToHtml_ShouldBeCorrect()
+        {
+            var md = new Md();
+            md.RenderToHtml("_em_ __strong__ _not __strong__ easy_  __of _italic_ anyway__")
+                .ShouldBeEquivalentTo("<em>em</em> <strong>strong</strong> <em>not __strong__ easy</em>  __of <em>italic</em> anyway__");
+        }
     }
 }

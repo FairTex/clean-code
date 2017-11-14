@@ -2,7 +2,6 @@
 {
     public interface IHandler
     {
-        void Handle(char c);
-        void ExcludeProcessIn(IHandler handler);
+        string Handle(string markdown);
     }
 }

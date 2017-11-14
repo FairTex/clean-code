@@ -1,28 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Markdown
 {
     public class MarkdownProcessor
     {
-        private List<IHandler> Handlers { get; set; } 
-
-        public void Process(char c)
+        public MarkdownProcessor()
         {
-            foreach (var handler in Handlers)
+        }
+        
+        public string Process(string markdown)
+        {
+            var emHandler = new EmHandler();
+            var strongHandler = new StrongHandler();
+            
+            var splitedLine = emHandler.Split(markdown);
+            var html = splitedLine.Select(line =>
             {
-                handler.Handle(c);
-            }
+                if (line.StartsWith("_") && line.EndsWith("_"))
+                {
+                    var emHtml = "<em>" + line.Trim('_') + "</em>";
+                    return emHandler.RemoveScreening(emHtml);
+                }
+                var splitted = strongHandler.Split(line);
+                var strongHtml = strongHandler.Replace(splitted);
+                return strongHandler.RemoveScreening(strongHtml);
+            }).ToArray();
+            return String.Join("", html);
         }
-
-        public string GetHtml()
-        {
-            return "";
-        }
-
-        public void RegisterHandler(IHandler handler)
-        {
-            Handlers.Add(handler);
-        }
+        
     }
 }

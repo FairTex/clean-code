@@ -11,6 +11,9 @@ namespace Markdown
 	{
 		static void Main(string[] args)
 		{
+            var md = new Md();
+		    var s = md.RenderToHtml("_здесь должен быть em_ __а здесь strong__");
+            Console.WriteLine(s);
 		}
 	}
 }
