@@ -20,9 +20,7 @@ namespace Markdown
                     var emHtml = "<em>" + line.Trim('_') + "</em>";
                     return emHandler.RemoveScreening(emHtml);
                 }
-                var splitted = strongHandler.Split(line);
-                var strongHtml = strongHandler.Replace(splitted);
-                return strongHandler.RemoveScreening(strongHtml);
+                return strongHandler.Handle(line);
             }).ToArray();
             return String.Join("", html);
         }
