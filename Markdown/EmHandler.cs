@@ -17,7 +17,7 @@ namespace Markdown
         {
             var lines = Split(markdown);
             var res = Replace(lines);
-            return RemoveScreening(res, "_");
+            return RemoveScreening(res);
         }
 
         public string Replace(string[] lines)
@@ -39,7 +39,7 @@ namespace Markdown
 
         public string[] Split(string line)
         {
-            var splitIndexes = GetIndexesForSplit(line, IsCorrectStart, IsCorrectFinish);
+            var splitIndexes = GetIndexesForSplit(line);
             return SplitLineOnIndexes(line, splitIndexes.ToArray());
         }
 

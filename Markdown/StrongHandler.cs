@@ -40,7 +40,7 @@ namespace Markdown
         {
             var lines = Split(markdown);
             var res = Replace(lines);
-            return RemoveScreening(res, "__");
+            return RemoveScreening(res);
         }
 
         public string RemoveScreening(string input) => base.RemoveScreening(input, "__");
