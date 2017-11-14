@@ -24,8 +24,8 @@ namespace Markdown
             h.IsCorrectFinish(line, position).Should().Be(answer);
         }
 
-        //[TestCase("line __good__", "line <strong>good</strong>")]
-        //[TestCase("line ___bad__", "line ___bad__")]
+        [TestCase("line __good__", "line <strong>good</strong>")]
+        [TestCase("line ___bad__", "line ___bad__")]
         [TestCase(@"line \__bad__", @"line __bad__")]
         public void StrongHandler_ShouldBeCorrect(string line, string result)
         {
@@ -50,7 +50,7 @@ namespace Markdown
             var tagLines = lines.Select(el =>
             {
                 if (el.StartsWith("__") && el.EndsWith("__"))
-                    return "<strong>" + el.Trim(new[] { '_', '_' }) + "</strong>";
+                    return "<strong>" + el.Trim(new[] {'_', '_'}) + "</strong>";
                 return el;
             }).ToArray();
             var res = String.Join("", tagLines);
@@ -73,8 +73,8 @@ namespace Markdown
                 isCorrect = isCorrect && line[position - 1] == ' ';
             }
             isCorrect = isCorrect && position < line.Length - 4 && line[position + 1] == '_' &&
-                line[position + 2] != ' ' && line[position + 2] != '_';
-            
+                        line[position + 2] != ' ' && line[position + 2] != '_';
+
             return isCorrect;
         }
 
@@ -82,8 +82,8 @@ namespace Markdown
         {
             var isCorrect = line[position] == '_';
             isCorrect = isCorrect && position > 3 && line[position - 1] == '_' &&
-                line[position - 2] != ' ' && line[position - 2] != '_';
-            
+                        line[position - 2] != ' ' && line[position - 2] != '_';
+
             if (position < line.Length - 1)
             {
                 isCorrect = isCorrect && line[position + 1] == ' ';

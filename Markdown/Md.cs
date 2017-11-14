@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Markdown
@@ -7,8 +9,22 @@ namespace Markdown
     {
         public string RenderToHtml(string markdown)
         {
-            var processor = new MarkdownProcessor();
-            return processor.Process(markdown);
+            var emHandler = new EmHandler();
+            var strongHandler = new StrongHandler();
+
+            var splitedLine = emHandler.Split(markdown);
+            var html = splitedLine.Select(line =>
+            {
+                if (line.StartsWith("_") && line.EndsWith("_"))
+                {
+                    var emHtml = "<em>" + line.Trim('_') + "</em>";
+                    return emHandler.RemoveScreening(emHtml);
+                }
+                var splitted = strongHandler.Split(line);
+                var strongHtml = strongHandler.Replace(splitted);
+                return strongHandler.RemoveScreening(strongHtml);
+            }).ToArray();
+            return String.Join("", html);
         }
     }
 
@@ -21,7 +37,8 @@ namespace Markdown
         {
             var md = new Md();
             md.RenderToHtml("_em_ __strong__ _not __strong__ easy_  __of _italic_ anyway__")
-                .ShouldBeEquivalentTo("<em>em</em> <strong>strong</strong> <em>not __strong__ easy</em>  __of <em>italic</em> anyway__");
+                .ShouldBeEquivalentTo(
+                    "<em>em</em> <strong>strong</strong> <em>not __strong__ easy</em>  __of <em>italic</em> anyway__");
         }
     }
 }
