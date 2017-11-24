@@ -58,8 +58,10 @@
     <Compile Include="Handler.cs" />
     <Compile Include="IHandler.cs" />
     <Compile Include="Md.cs" />
+    <Compile Include="Md_ShouldRender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="StrongHandler.cs" />
+    <Compile Include="StrongHandler_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
